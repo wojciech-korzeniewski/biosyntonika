@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { CtaBox } from '@/components/CtaBox'
 import { IkigaiDiagram } from '@/components/IkigaiDiagram'
 import { IkigaiTrainer } from '@/components/IkigaiTrainer'
@@ -13,14 +14,25 @@ export const metadata = pageMetadata({ title: page.seoTitle, description: page.d
 export default function IkigaiPage() {
   return (
     <>
-      <JsonLd data={webPageJsonLd({ path, title: page.title, description: page.description, crumbs })} />
+      <JsonLd
+        data={webPageJsonLd({ path, title: page.title, description: page.description, crumbs })}
+      />
       <section className="section ikigai">
         <div className="container">
           <div className="ikigai-shell">
             <div className="ikigai-head">
-              <div>
-                <p className="ikigai-brand">IKIGAI</p>
-                <p className="ikigai-brand-sub">Trener IKIGAI · BioSyntonika™</p>
+              <div className="ikigai-head-brand">
+                <Image
+                  src="/images/ikigai-symbol.png"
+                  alt=""
+                  width={44}
+                  height={56}
+                  className="ikigai-symbol"
+                />
+                <div>
+                  <p className="ikigai-brand">IKIGAI</p>
+                  <p className="ikigai-brand-sub">Trener IKIGAI · BioSyntonika™</p>
+                </div>
               </div>
             </div>
             <div className="ikigai-grid">

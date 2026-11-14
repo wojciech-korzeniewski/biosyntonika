@@ -356,3 +356,5 @@ address.panel p { margin-bottom: 6px; }
 .small { font-size: 0.82rem; }
 .prose > section:first-child > h2:first-child { margin-top: 0; }
 .related { align-items: flex-start; }
+.ikigai-head-brand { display: flex; align-items: center; gap: 18px; }
+.ikigai-symbol { width: 56px; height: auto; }

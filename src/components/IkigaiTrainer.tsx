@@ -73,7 +73,9 @@ export function IkigaiTrainer() {
     const lines = [`IKIGAI${name ? ` – ${name}` : ''} (${versions[version].label})`, '']
     for (const id of circleOrder) {
       lines.push(`## ${circles[id].label}`)
-      versions[version].questions[id].forEach((q, i) => lines.push(`- ${q} → ${answers[id][i] || '—'}`))
+      versions[version].questions[id].forEach((q, i) =>
+        lines.push(`- ${q} → ${answers[id][i] || '—'}`),
+      )
       if (deepen[id]) lines.push(`  ${circles[id].deepen} → ${deepen[id]}`)
       lines.push('')
     }
@@ -134,7 +136,9 @@ export function IkigaiTrainer() {
           <button type="button" className="btn btn-outline" onClick={start}>
             Dalej
           </button>
-          <p className="muted small">Odpowiedzi zostają tylko w Twojej przeglądarce – nigdzie ich nie wysyłamy.</p>
+          <p className="muted small">
+            Odpowiedzi zostają tylko w Twojej przeglądarce – nigdzie ich nie wysyłamy.
+          </p>
         </div>
       )}
 
@@ -213,12 +217,19 @@ export function IkigaiTrainer() {
             <button type="button" className="btn btn-outline btn-sm" onClick={() => window.print()}>
               Drukuj / PDF
             </button>
-            <button type="button" className="btn btn-outline btn-sm" onClick={() => setStep('intro')}>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm"
+              onClick={() => setStep('intro')}
+            >
               Zacznij od nowa
             </button>
           </div>
           <div className="trainer-cta">
-            <p>Chcesz przełożyć mapę na konkretne kroki i przepracować blokady? Omów wyniki na sesji z trenerem.</p>
+            <p>
+              Chcesz przełożyć mapę na konkretne kroki i przepracować blokady? Omów wyniki na sesji
+              z trenerem.
+            </p>
             <Link href="/kontakt" className="btn btn-solid">
               Umów sesję
             </Link>
