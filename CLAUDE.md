@@ -30,6 +30,7 @@ Brak testów automatycznych – po zmianie odpal `pnpm typecheck && pnpm lint`, 
 - **SEO na każdej stronie:** metadane przez `pageMetadata()` z `src/lib/seo.ts`, dane strukturalne przez `<JsonLd>` + helpery `webPageJsonLd` / `productJsonLd` / `businessJsonLd`. Nowe publiczne ścieżki dopisz do `src/app/sitemap.ts`, jeśli nie są generowane automatycznie.
 - **Stare adresy WordPressa:** przekierowania 301 w `next.config.ts` – nie usuwaj ich.
 - **Styl kodu:** Prettier – bez średników, pojedyncze cudzysłowy, `trailingComma: all`, szerokość 100. Alias importów `@/` → `src/`.
+- **Mapa dojazdu:** komponent `MapEmbed` (`src/components/MapEmbed.tsx`) na `/kontakt`. Adresy w `site.booking`: `mapsUrl` (link „Otwórz w Mapach”) i `mapsEmbedUrl` (iframe, bez klucza API). Zmiana adresu gabinetu = zaktualizuj oba pola + `site.contact`. Iframe Google ustawia cookies – nie dokładaj kolejnych osadzeń zewnętrznych bez decyzji właściciela (RODO).
 - **Komponenty klienckie** (`'use client'`) tylko tam, gdzie trzeba (menu mobilne, aplikacja IKIGAI). Reszta to Server Components.
 
 ## Trener IKIGAI – na co uważać

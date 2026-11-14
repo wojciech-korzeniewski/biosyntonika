@@ -51,7 +51,7 @@ Nie ma bazy danych, logowania użytkowników ani panelu admina.
 | `/oferta/[slug]` | `src/app/oferta/[slug]/page.tsx` | Karta usługi (Sesja 1:1, Warsztaty z anhedonią) z przyciskiem „Kupuję” |
 | `/ikigai` | `src/app/ikigai/page.tsx` | Trener IKIGAI (aplikacja) |
 | `/faq` | `src/app/faq/page.tsx` | Najczęstsze pytania |
-| `/kontakt` | `src/app/kontakt/page.tsx` | Kontakt i zapisy |
+| `/kontakt` | `src/app/kontakt/page.tsx` | Kontakt i zapisy, mapa dojazdu (Google Maps) |
 | `/regulamin`, `/zwroty`, `/polityka-prywatnosci` | `src/app/[slug]/page.tsx` | Strony prawne z CMS-a |
 | `/sitemap.xml`, `/robots.txt` | `src/app/sitemap.ts`, `robots.ts` | Generowane automatycznie |
 | `/llms.txt` | `src/app/llms.txt/route.ts` | Opis strony dla modeli AI (llmstxt.org) |
@@ -72,7 +72,8 @@ src/
 ├── components/             # Komponenty wielokrotnego użytku
 │   ├── TopicPage.tsx       # Szablon podstron tematycznych
 │   ├── JsonLd.tsx          # Wstrzykiwanie danych strukturalnych
-│   ├── CtaBox, Faq, PageHeader, ProductCard, MobileMenu
+│   ├── MapEmbed.tsx        # Osadzona mapa Google (iframe, lazy) – używana na /kontakt
+│   ├── CtaBox, Faq, PageHeader, ProductCard, MobileMenu, CallButton
 │   └── ikigai/             # Aplikacja IKIGAI (IkigaiApp, IkigaiFinal, Venn, ui)
 ├── content/                # TREŚCI – tu się edytuje teksty
 │   ├── site.ts             # Kontakt, menu, strona główna, o mnie, metoda, FAQ, disclaimer
@@ -246,6 +247,7 @@ Vercel → import repozytorium → ustawienie zmiennych środowiskowych → depl
 - Podstrony tematyczne: hipnoterapia medyczna, Totalna Biologia, naturopatia.
 - Pełne SEO: metadane, schema.org, sitemap, robots, `llms.txt`, obrazki OG, przekierowania 301.
 - Trener IKIGAI: 3 wersje, PL/EN, AI z fallbackiem, finał, Venn, karta PNG, historia sesji, zgłoszenie e-mailem.
+- Mapa dojazdu na `/kontakt` (iframe Google Maps bez klucza API, przyciemniona filtrem CSS pod ciemny motyw).
 
 **Do zrobienia / otwarte**
 - Wybór i podpięcie CMS-a z płatnościami – na razie „Kupuję” prowadzi do kontaktu.
@@ -253,3 +255,4 @@ Vercel → import repozytorium → ustawienie zmiennych środowiskowych → depl
 - Treści stron prawnych (regulamin, zwroty, polityka prywatności) do weryfikacji – niegotowe strony mają `noindex`.
 - Limit zapytań do AI działa per instancja – przy większym ruchu rozważyć współdzielony (np. Upstash/Vercel KV).
 - Brak testów automatycznych.
+- Mapa Google ładuje się bez zgody na cookies (RODO) – rozważyć wariant „kliknij, aby pokazać mapę” i wpis w polityce prywatności.
