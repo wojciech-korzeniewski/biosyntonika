@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Price } from '@/components/ProductCard'
+import { site } from '@/content/site'
 import { cms } from '@/lib/cms'
 import { OG_SIZE, ogImageUrl } from '@/lib/og'
 import { productJsonLd, stripHtml, truncate } from '@/lib/seo'
@@ -43,6 +44,8 @@ export default async function ProductPage({ params }: Props) {
   const product = await cms.getProduct((await params).slug)
   if (!product) notFound()
   const [main, ...rest] = product.images
+  const { contact, booking } = site
+  const tel = (phone: string) => `tel:${phone.replace(/\s/g, '')}`
 
   return (
     <article className="container product">
@@ -59,6 +62,31 @@ export default async function ProductPage({ params }: Props) {
             priority={i === 0}
           />
         ))}
+        <aside className="panel product-aside">
+          <p className="eyebrow">Jak się umówić</p>
+          <ul className="product-steps">
+            {booking.howTo.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ul>
+          <div className="product-contact">
+            <div>
+              <span className="muted">Telefon</span>
+              {contact.phones.map((phone) => (
+                <a key={phone} href={tel(phone)}>
+                  {phone}
+                </a>
+              ))}
+            </div>
+            <div>
+              <span className="muted">Gabinet</span>
+              <a href={booking.mapsUrl} target="_blank" rel="noopener noreferrer">
+                {contact.street}, {contact.city}
+              </a>
+            </div>
+          </div>
+          <p className="disclaimer">{site.disclaimer}</p>
+        </aside>
       </div>
       <div className="product-info">
         <p className="eyebrow">
@@ -66,6 +94,12 @@ export default async function ProductPage({ params }: Props) {
           {product.categories[0] && <> · {product.categories[0].name}</>}
         </p>
         <h1>{product.title}</h1>
+        {product.shortDescriptionHtml && (
+          <div
+            className="product-lead"
+            dangerouslySetInnerHTML={{ __html: product.shortDescriptionHtml }}
+          />
+        )}
         <Price product={product} />
         {product.facts?.length ? (
           <dl className="facts">
@@ -77,13 +111,18 @@ export default async function ProductPage({ params }: Props) {
             ))}
           </dl>
         ) : null}
-        {product.purchasable ? (
-          <a href={cms.getCheckoutUrl(product)} className="btn btn-solid">
-            Kupuję
+        <div className="product-cta">
+          {product.purchasable ? (
+            <a href={cms.getCheckoutUrl(product)} className="btn btn-solid">
+              Kupuję
+            </a>
+          ) : (
+            <p className="muted">Obecnie niedostępne.</p>
+          )}
+          <a href={tel(contact.bookingPhone)} className="btn btn-outline">
+            Zadzwoń: {contact.bookingPhone}
           </a>
-        ) : (
-          <p className="muted">Obecnie niedostępne.</p>
-        )}
+        </div>
         {product.descriptionHtml && (
           <div className="prose" dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
         )}

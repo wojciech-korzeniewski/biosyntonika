@@ -190,7 +190,22 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .product { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; padding-top: 72px; padding-bottom: 120px; align-items: start; }
 .product-gallery { display: grid; gap: 16px; position: sticky; top: 120px; }
 .product-gallery img { width: 100%; height: auto; border: 1px solid var(--line); }
-.product-info .btn { margin-bottom: 48px; }
+.product-info h1 { margin-bottom: 0.4em; }
+.product-lead { font-size: 1.15rem; line-height: 1.7; color: #cfcabe; margin-bottom: 28px; max-width: 34em; }
+.product-lead p { margin: 0; }
+.product-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 56px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
+.product-cta .muted { margin: 0; align-self: center; }
+.product-aside { padding: 32px; }
+.product-aside .eyebrow { margin-bottom: 0.8rem; }
+.product-steps { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; font-size: 0.95rem; color: #cfcabe; }
+.product-steps li { position: relative; padding-left: 22px; }
+.product-steps li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 10px; height: 1px; background: var(--gold); }
+.product-contact { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 20px; border-top: 1px solid var(--line); }
+.product-contact div { display: flex; flex-direction: column; gap: 2px; }
+.product-contact .muted { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
+.product-aside .disclaimer { margin: 20px 0 0; }
+/* Sticky tylko gdy galeria + panel mieszczą się w oknie */
+@media (max-height: 900px) { .product-gallery { position: static; } }
 .product-info .eyebrow a { color: var(--gold); }
 
 /* Prose (HTML z CMS) */
@@ -214,8 +229,9 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .faq details p { color: #cfcabe; padding-bottom: 24px; margin: 0; }
 
 /* Product facts */
-.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; margin: 0 0 32px; border: 1px solid var(--line); background: var(--line); }
+.facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 0 0 32px; border: 1px solid var(--line); background: var(--line); }
 .facts div { background: var(--bg); padding: 14px 18px; }
+.facts div:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .facts dt { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
 .facts dd { margin: 4px 0 0; }
 
@@ -495,3 +511,8 @@ select.ikg-input { appearance: none; }
 
 /* Miejsce na przycisk telefonu, żeby nie zasłaniał stopki */
 .footer-bottom { padding-bottom: 96px; }
+
+@media (max-width: 520px) {
+  .facts, .product-contact { grid-template-columns: 1fr; }
+  .product-cta .btn { flex: 1 1 100%; text-align: center; }
+}
