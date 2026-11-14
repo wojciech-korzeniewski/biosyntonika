@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="site-header">
           <div className="container header-inner">
             <Link href="/" className="brand">
-              <Image src={site.logo.url} alt={site.logo.alt} width={72} height={53} priority />
+              <Image src={site.logo.url} alt={site.logo.alt} width={72} height={53} quality={60} priority />
               <span>
                 <span className="brand-name">{site.name}</span>
                 <span className="brand-owner">{site.owner}</span>
