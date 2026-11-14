@@ -1,34 +1,36 @@
+import Link from 'next/link'
+import { CtaBox } from '@/components/CtaBox'
+import { Faq } from '@/components/Faq'
+import { IkigaiDiagram } from '@/components/IkigaiDiagram'
 import { JsonLd } from '@/components/JsonLd'
 import { ProductCard } from '@/components/ProductCard'
+import { ikigaiPage } from '@/content/ikigai'
 import { site } from '@/content/site'
 import { cms } from '@/lib/cms'
-import { businessJsonLd, hasIkigai } from '@/lib/seo'
+import { businessJsonLd } from '@/lib/seo'
 
 export const revalidate = 300
 
-const tel = (phone: string) => `tel:${phone.replace(/\s/g, '')}`
 const WORDS = ['spokój', 'oddech', 'uziemienie', 'regeneracja', 'witalność']
 
 export default async function HomePage() {
   const products = await cms.getProducts()
-  const { hero, about, method, ikigai, offer, booking, contact, faq } = site
+  const { hero, about, method, offer, faq } = site
 
   return (
     <>
       <JsonLd data={businessJsonLd()} />
-      <section className="hero" id="start">
+      <section className="hero">
         <div className="hero-text">
           <p className="eyebrow">{site.tagline}</p>
           <h1>{hero.title}</h1>
           <p className="lead">{hero.lead}</p>
           <div className="actions">
-            {hero.buttons
-              .filter((b) => hasIkigai || b.href !== '#ikigai')
-              .map((b) => (
-                <a key={b.href} href={b.href} className="btn btn-outline">
-                  {b.label}
-                </a>
-              ))}
+            {hero.buttons.map((b) => (
+              <Link key={b.href} href={b.href} className="btn btn-outline">
+                {b.label}
+              </Link>
+            ))}
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">
@@ -44,36 +46,30 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="o-mnie" className="section">
+      <section className="section">
         <div className="container split">
           <div>
             <p className="eyebrow">O mnie</p>
             <h2>{about.title}</h2>
-            {about.paragraphs.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
-            ))}
+            <p>{about.paragraphs[0]}</p>
+            <Link href="/o-mnie" className="more">
+              Poznaj mnie bliżej →
+            </Link>
           </div>
           <aside className="panel">
             <h3>{about.workspace.title}</h3>
             <p>{about.workspace.text}</p>
             <p className="muted" style={{ whiteSpace: 'pre-line' }}>
-              {contact.address}
+              {site.contact.address}
             </p>
-            <p className="muted">
-              <a href={`mailto:${contact.email}`}>{contact.email}</a>
-              <br />
-              {contact.phones.map((p, i) => (
-                <span key={p}>
-                  {i > 0 && ' / '}
-                  <a href={tel(p)}>{p}</a>
-                </span>
-              ))}
-            </p>
+            <Link href="/kontakt" className="more">
+              Dojazd i rezerwacja →
+            </Link>
           </aside>
         </div>
       </section>
 
-      <section id="metoda" className="section alt">
+      <section className="section alt">
         <div className="container">
           <div className="section-head">
             <p className="eyebrow">Metoda</p>
@@ -82,27 +78,35 @@ export default async function HomePage() {
           </div>
           <ol className="pillars">
             {method.pillars.map((p, i) => (
-              <li key={p.title}>
+              <li key={p.slug}>
                 <span className="pillar-no">{String(i + 1).padStart(2, '0')}</span>
                 <h3>{p.title}</h3>
                 <p>{p.text}</p>
+                <Link href={p.href ?? `/metoda#${p.slug}`} className="more">
+                  Czytaj więcej →
+                </Link>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      {hasIkigai && (
-        <section id="ikigai" className="section">
-          <div className="container narrow center">
-            <p className="eyebrow">Odkryj swoje</p>
-            <h2>{ikigai.title}</h2>
-            <p className="lead">{ikigai.text}</p>
+      <section className="section">
+        <div className="container split">
+          <div>
+            <p className="eyebrow">{ikigaiPage.eyebrow}</p>
+            <h2>Odkryj swoje ikigai</h2>
+            <p>{ikigaiPage.purpose.text}</p>
+            <p className="muted">4 kręgi · 20 pytań · wersje dla dorosłych, młodzieży oraz firm i zespołów.</p>
+            <Link href="/ikigai" className="btn btn-outline">
+              Rozpocznij ćwiczenie
+            </Link>
           </div>
-        </section>
-      )}
+          <IkigaiDiagram className="compact" />
+        </div>
+      </section>
 
-      <section id="oferta" className="section alt">
+      <section className="section alt">
         <div className="container">
           <div className="section-head">
             <p className="eyebrow">Sklep</p>
@@ -116,34 +120,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="faq" className="section">
+      <section className="section">
         <div className="container narrow">
           <p className="eyebrow">FAQ</p>
           <h2>{faq.title}</h2>
-          <div className="faq">
-            {faq.items.map((f) => (
-              <details key={f.q}>
-                <summary>
-                  <h3>{f.q}</h3>
-                </summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="wizyta" className="section alt">
-        <div className="container narrow center">
-          <p className="eyebrow">Kontakt</p>
-          <h2>{booking.title}</h2>
-          <p>{booking.text}</p>
-          <p className="big-phone">
-            <a href={tel(contact.bookingPhone)}>{contact.bookingPhone}</a>
+          <Faq items={faq.items.slice(0, 4)} />
+          <p>
+            <Link href="/faq" className="more">
+              Wszystkie pytania →
+            </Link>
           </p>
-          <p className="muted">
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </p>
+          <CtaBox />
         </div>
       </section>
     </>

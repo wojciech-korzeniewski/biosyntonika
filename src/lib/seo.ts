@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { site } from '@/content/site'
 import type { Product } from '@/lib/cms'
 
@@ -11,8 +12,83 @@ export const stripHtml = (html = '') =>
 export const truncate = (text: string, max = 158) =>
   text.length <= max ? text : `${text.slice(0, text.lastIndexOf(' ', max - 1))}…`
 
-/** Czy sekcja IKIGAI ma treść (pusta = ukryta w menu i na stronie). */
-export const hasIkigai = Boolean(site.ikigai.text)
+/** Metadane podstrony: tytuł (bez doklejania nazwy, jeśli już ją zawiera), opis, canonical, OG. */
+export function pageMetadata({
+  title,
+  description,
+  path,
+  image,
+}: {
+  title: string
+  description: string
+  path: string
+  image?: { url: string; alt: string }
+}): Metadata {
+  const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`
+  return {
+    title: { absolute: fullTitle },
+    description: truncate(description),
+    alternates: { canonical: path },
+    openGraph: {
+      type: 'website',
+      locale: 'pl_PL',
+      siteName: site.name,
+      title: fullTitle,
+      description: truncate(description),
+      url: path,
+      ...(image ? { images: [image] } : {}),
+    },
+  }
+}
+
+export type Crumb = { name: string; path: string }
+
+export function breadcrumbJsonLd(crumbs: Crumb[]) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: 'Strona główna', path: '/' }, ...crumbs].map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: abs(c.path),
+    })),
+  }
+}
+
+/** Opis strony (WebPage) powiązany z firmą – dla podstron. */
+export function webPageJsonLd({
+  path,
+  title,
+  description,
+  crumbs,
+  type = 'WebPage',
+  extra = [],
+}: {
+  path: string
+  title: string
+  description: string
+  crumbs: Crumb[]
+  type?: string
+  extra?: object[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': type,
+        '@id': `${abs(path)}#webpage`,
+        url: abs(path),
+        name: title,
+        description,
+        inLanguage: 'pl-PL',
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        about: { '@id': `${SITE_URL}/#business` },
+      },
+      breadcrumbJsonLd(crumbs),
+      ...extra,
+    ],
+  }
+}
 
 const ORG_ID = `${SITE_URL}/#business`
 const PERSON_ID = `${SITE_URL}/#izabela`
@@ -62,7 +138,7 @@ export function businessJsonLd() {
         jobTitle: site.ownerTitles,
         worksFor: { '@id': ORG_ID },
         knowsAbout: ['Naturopatia', 'Hipnoterapia medyczna', 'Totalna Biologia', 'Recall Healing', 'Biologia stresu'],
-        url: `${SITE_URL}/#o-mnie`,
+        url: abs('/o-mnie'),
       },
     ],
   }
@@ -93,14 +169,10 @@ export function productJsonLd(product: Product) {
           seller: { '@id': ORG_ID },
         },
       },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Strona główna', item: SITE_URL },
-          { '@type': 'ListItem', position: 2, name: 'Oferta', item: abs('/#oferta') },
-          { '@type': 'ListItem', position: 3, name: product.title, item: url },
-        ],
-      },
+      breadcrumbJsonLd([
+        { name: 'Oferta', path: '/oferta' },
+        { name: product.title, path: `/oferta/${product.slug}` },
+      ]),
     ],
   }
 }

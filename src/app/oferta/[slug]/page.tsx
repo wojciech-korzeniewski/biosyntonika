@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
       <div className="product-info">
         <p className="eyebrow">
-          <Link href="/#oferta">Oferta</Link>
+          <Link href="/oferta">Oferta</Link>
           {product.categories[0] && <> · {product.categories[0].name}</>}
         </p>
         <h1>{product.title}</h1>

@@ -3,8 +3,9 @@ import { Cormorant_Garamond, Jost } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { MobileMenu } from '@/components/MobileMenu'
 import { site } from '@/content/site'
-import { hasIkigai, SITE_URL } from '@/lib/seo'
+import { SITE_URL } from '@/lib/seo'
 import './styles.css'
 
 const serif = Cormorant_Garamond({
@@ -41,6 +42,7 @@ const tel = (phone: string) => `tel:${phone.replace(/\s/g, '')}`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { contact } = site
+  const navItems = site.nav
   return (
     <html lang="pl" className={`${serif.variable} ${sans.variable}`}>
       <body>
@@ -53,8 +55,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="brand-owner">{site.owner}</span>
               </span>
             </Link>
-            <nav aria-label="Menu główne">
-              {site.nav.filter((item) => hasIkigai || item.href !== '/#ikigai').map((item) => (
+            <nav className="desktop-nav" aria-label="Menu główne">
+              {navItems.map((item) => (
                 <Link key={item.href} href={item.href}>
                   {item.label}
                 </Link>
@@ -63,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {site.navCta.label}
               </Link>
             </nav>
+            <MobileMenu items={navItems} cta={site.navCta} />
           </div>
         </header>
 
@@ -87,7 +90,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </p>
             </div>
             <div>
+              <p className="eyebrow">Na stronie</p>
+              <p><Link href="/metoda">Metoda BioSyntonika™</Link></p>
+              <p><Link href="/hipnoterapia-medyczna">Hipnoterapia medyczna</Link></p>
+              <p><Link href="/totalna-biologia">Totalna Biologia</Link></p>
+              <p><Link href="/naturopatia">Naturopatia</Link></p>
+              <p><Link href="/ikigai">IKIGAI</Link></p>
+            </div>
+            <div>
               <p className="eyebrow">Informacje</p>
+              <p><Link href="/faq">FAQ</Link></p>
+              <p><Link href="/kontakt">Kontakt</Link></p>
               <p><Link href="/regulamin">Regulamin</Link></p>
               <p><Link href="/zwroty">Polityka zwrotów</Link></p>
               <p><Link href="/polityka-prywatnosci">Polityka prywatności</Link></p>

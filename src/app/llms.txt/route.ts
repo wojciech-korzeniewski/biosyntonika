@@ -1,4 +1,6 @@
+import { ikigaiPage } from '@/content/ikigai'
 import { site } from '@/content/site'
+import { topics } from '@/content/topics'
 import { cms } from '@/lib/cms'
 import { abs, stripHtml } from '@/lib/seo'
 import { formatPrice } from '@/lib/format'
@@ -21,6 +23,14 @@ export async function GET() {
       (p) =>
         `- [${p.title}](${abs(`/oferta/${p.slug}`)}): ${p.seoDescription ?? stripHtml(p.shortDescriptionHtml)} Cena: ${formatPrice(p.price, p.currency)}.`,
     ),
+    '',
+    '## Strony',
+    `- [O mnie](${abs('/o-mnie')}): ${site.about.description}`,
+    `- [Metoda BioSyntonika™](${abs('/metoda')}): ${site.method.description}`,
+    ...topics.map((t) => `- [${t.name}](${abs(`/${t.slug}`)}): ${t.description}`),
+    `- [IKIGAI](${abs('/ikigai')}): ${ikigaiPage.description}`,
+    `- [FAQ](${abs('/faq')}): ${site.faq.description}`,
+    `- [Kontakt](${abs('/kontakt')}): ${site.booking.description}`,
     '',
     '## Metoda BioSyntonika™',
     site.method.lead,
