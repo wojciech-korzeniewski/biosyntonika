@@ -417,3 +417,62 @@ select.ikg-input { appearance: none; }
 @media (prefers-reduced-motion: reduce) {
   .coach .msg.wait, .venncard .va-new { animation: none; }
 }
+
+/* Pływający przycisk telefonu */
+.call-fab {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 30px 16px 24px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.45);
+  transition: background 0.2s, transform 0.2s;
+}
+.call-fab:hover,
+.call-fab:focus-visible { background: var(--gold-light); color: var(--bg); transform: translateY(-2px); }
+.call-fab:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.call-fab-icon { width: 26px; height: 26px; flex: none; }
+.call-fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--gold);
+  animation: call-pulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes call-pulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+
+@media (max-width: 760px) {
+  .call-fab { width: 60px; height: 60px; padding: 0; justify-content: center; }
+  .call-fab-label { display: none; }
+  .call-fab-icon { width: 28px; height: 28px; animation: call-ring 3s ease-in-out infinite; }
+}
+@keyframes call-ring {
+  0%, 70%, 100% { transform: rotate(0); }
+  74%, 82%, 90% { transform: rotate(-14deg); }
+  78%, 86%, 94% { transform: rotate(14deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-fab::before, .call-fab-icon { animation: none; }
+}
+
+@media print { .call-fab { display: none; } }
+
+/* Miejsce na przycisk telefonu, żeby nie zasłaniał stopki */
+.footer-bottom { padding-bottom: 96px; }

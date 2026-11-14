@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Jost } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { CallButton } from '@/components/CallButton'
 import { MobileMenu } from '@/components/MobileMenu'
 import { site } from '@/content/site'
 import { SITE_URL } from '@/lib/seo'
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             © {new Date().getFullYear()} {site.name}
           </div>
         </footer>
+        <CallButton />
       </body>
     </html>
   )
