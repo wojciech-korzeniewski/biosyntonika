@@ -418,7 +418,7 @@ select.ikg-input { appearance: none; }
   .coach .msg.wait, .venncard .va-new { animation: none; }
 }
 
-/* Pływający przycisk telefonu */
+/* Pływający przycisk telefonu – kółko, po najechaniu rozwija się w numer */
 .call-fab {
   position: fixed;
   right: max(20px, env(safe-area-inset-right));
@@ -426,8 +426,8 @@ select.ikg-input { appearance: none; }
   z-index: 90;
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 30px 16px 24px;
+  height: 60px;
+  padding: 0 16px;
   border-radius: 999px;
   background: var(--gold);
   color: var(--bg);
@@ -436,13 +436,29 @@ select.ikg-input { appearance: none; }
   font-size: 1.15rem;
   letter-spacing: 0.02em;
   line-height: 1;
+  white-space: nowrap;
   box-shadow: 0 8px 28px rgb(0 0 0 / 0.45);
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.25s, padding 0.35s ease;
+}
+.call-fab-icon {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  animation: call-ring 3s ease-in-out infinite;
+}
+.call-fab-label {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
 }
 .call-fab:hover,
-.call-fab:focus-visible { background: var(--gold-light); color: var(--bg); transform: translateY(-2px); }
+.call-fab:focus-visible { background: var(--gold-light); color: var(--bg); padding: 0 26px 0 20px; }
+.call-fab:hover .call-fab-label,
+.call-fab:focus-visible .call-fab-label { max-width: 200px; opacity: 1; margin-left: 14px; }
+.call-fab:hover .call-fab-icon,
+.call-fab:focus-visible .call-fab-icon { animation: none; }
 .call-fab:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-.call-fab-icon { width: 26px; height: 26px; flex: none; }
 .call-fab::before {
   content: '';
   position: absolute;
@@ -452,15 +468,11 @@ select.ikg-input { appearance: none; }
   animation: call-pulse 2.4s ease-out infinite;
   pointer-events: none;
 }
+.call-fab:hover::before,
+.call-fab:focus-visible::before { animation: none; opacity: 0; }
 @keyframes call-pulse {
   0% { opacity: 0.7; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.25); }
-}
-
-@media (max-width: 760px) {
-  .call-fab { width: 60px; height: 60px; padding: 0; justify-content: center; }
-  .call-fab-label { display: none; }
-  .call-fab-icon { width: 28px; height: 28px; animation: call-ring 3s ease-in-out infinite; }
+  100% { opacity: 0; transform: scale(1.3); }
 }
 @keyframes call-ring {
   0%, 70%, 100% { transform: rotate(0); }
@@ -468,8 +480,15 @@ select.ikg-input { appearance: none; }
   78%, 86%, 94% { transform: rotate(14deg); }
 }
 
+/* Na dotyku nie ma najechania – zostaje samo kółko */
+@media (hover: none) {
+  .call-fab:hover { padding: 0 16px; }
+  .call-fab:hover .call-fab-label { max-width: 0; opacity: 0; margin-left: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .call-fab::before, .call-fab-icon { animation: none; }
+  .call-fab, .call-fab-label { transition: none; }
 }
 
 @media print { .call-fab { display: none; } }
