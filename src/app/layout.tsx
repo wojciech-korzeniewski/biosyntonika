@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { site } from '@/content/site'
+import { hasIkigai, SITE_URL } from '@/lib/seo'
 import './styles.css'
 
 const serif = Cormorant_Garamond({
@@ -18,9 +19,22 @@ const sans = Jost({
 })
 
 export const metadata: Metadata = {
-  metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
-  title: { default: `${site.name} – ${site.owner}`, template: `%s – ${site.name}` },
+  metadataBase: new URL(SITE_URL),
+  title: { default: site.seoTitle, template: `%s | ${site.name}` },
   description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.owner }],
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'pl_PL',
+    siteName: site.name,
+    title: site.seoTitle,
+    description: site.description,
+    url: '/',
+  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
 }
 
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, '')}`
@@ -40,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </span>
             </Link>
             <nav aria-label="Menu główne">
-              {site.nav.map((item) => (
+              {site.nav.filter((item) => hasIkigai || item.href !== '/#ikigai').map((item) => (
                 <Link key={item.href} href={item.href}>
                   {item.label}
                 </Link>
@@ -79,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p><Link href="/polityka-prywatnosci">Polityka prywatności</Link></p>
             </div>
           </div>
+          <p className="container disclaimer">{site.disclaimer}</p>
           <div className="container footer-bottom">
             © {new Date().getFullYear()} {site.name}
           </div>

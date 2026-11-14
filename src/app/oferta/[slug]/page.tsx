@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { JsonLd } from '@/components/JsonLd'
 import { Price } from '@/components/ProductCard'
 import { cms } from '@/lib/cms'
+import { productJsonLd, stripHtml, truncate } from '@/lib/seo'
 
 export const revalidate = 300
 
@@ -17,9 +19,20 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await cms.getProduct((await params).slug)
   if (!product) return {}
+  const title = product.seoTitle ?? product.title
+  const description = truncate(product.seoDescription ?? stripHtml(product.shortDescriptionHtml))
+  const url = `/oferta/${product.slug}`
   return {
-    title: product.title,
-    openGraph: product.images[0] ? { images: [product.images[0].url] } : undefined,
+    title: { absolute: title },
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'website',
+      title,
+      description,
+      url,
+      images: product.images[0] ? [{ url: product.images[0].url, alt: product.images[0].alt }] : undefined,
+    },
   }
 }
 
@@ -30,6 +43,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <article className="container product">
+      <JsonLd data={productJsonLd(product)} />
       <div className="product-gallery">
         {[main, ...rest].filter(Boolean).map((img, i) => (
           <Image
@@ -50,6 +64,16 @@ export default async function ProductPage({ params }: Props) {
         </p>
         <h1>{product.title}</h1>
         <Price product={product} />
+        {product.facts?.length ? (
+          <dl className="facts">
+            {product.facts.map((f) => (
+              <div key={f.label}>
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
         {product.purchasable ? (
           <a href={cms.getCheckoutUrl(product)} className="btn btn-solid">
             Kupuję

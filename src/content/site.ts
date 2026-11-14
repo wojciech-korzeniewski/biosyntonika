@@ -3,10 +3,14 @@
  * Docelowo z CMS-a.
  */
 export const site = {
+  url: 'https://biosyntonika.com.pl',
   name: 'BioSyntonika™',
   owner: 'Izabela Gotowska-Sieradzka',
+  ownerTitles: ['Naturopata', 'Hipnoterapeuta Medyczny', 'Konsultant Totalnej Biologii'],
+  seoTitle: 'BioSyntonika™ – naturopata i hipnoterapeuta medyczny, Bydgoszcz',
   description:
-    'Naturopatia, hipnoterapia medyczna i autorska metoda BioSyntonika™. Gabinet w Bydgoszczy oraz sesje online.',
+    'Izabela Gotowska-Sieradzka – naturopata, hipnoterapeuta medyczny i konsultant Totalnej Biologii. Autorska metoda BioSyntonika™: gabinet w Bydgoszczy i sesje online.',
+  tagline: 'Naturopatia · Hipnoterapia medyczna · Totalna Biologia',
   logo: { url: '/images/logo.png', alt: 'BioSyntonika™', width: 581, height: 429 },
 
   contact: {
@@ -14,7 +18,15 @@ export const site = {
     phones: ['+48 794 326 333', '+48 577 658 585'],
     bookingPhone: '+48 577 658 585',
     address: 'ul. M. Kolbego 42 (I piętro, gab. nr 2)\n85-432 Bydgoszcz',
+    street: 'ul. M. Kolbego 42',
+    postalCode: '85-432',
+    city: 'Bydgoszcz',
+    region: 'kujawsko-pomorskie',
+    country: 'PL',
+    areaServed: ['Bydgoszcz', 'Szklarska Poręba', 'Polska (online)'],
   },
+  /** Profile w social media (Facebook, Instagram, Google Maps…) – uzupełnić. */
+  sameAs: [] as string[],
 
   nav: [
     { label: 'O mnie', href: '/#o-mnie' },
@@ -82,6 +94,43 @@ export const site = {
   },
 
   offer: { title: 'Oferta' },
+
+  faq: {
+    title: 'Najczęstsze pytania',
+    items: [
+      {
+        q: 'Ile trwa sesja BioSyntonika™ 1:1?',
+        a: 'Sesja indywidualna trwa około 120 minut.',
+      },
+      {
+        q: 'Czy sesja może odbyć się online?',
+        a: 'Tak. Sesje online odbywają się przez WhatsApp, Messenger lub FaceTime. Sesje stacjonarne odbywają się w Bydgoszczy lub w Szklarskiej Porębie.',
+      },
+      {
+        q: 'Ile kosztuje sesja i warsztaty?',
+        a: 'Sesja 1:1 kosztuje obecnie 500 zł (cena regularna 600 zł). Warsztaty kosztują obecnie 500 zł (cena regularna 550 zł).',
+      },
+      {
+        q: 'Jak umówić wizytę?',
+        a: 'Sesje online umawiamy w kalendarzu, a sesje stacjonarne telefonicznie: +48 577 658 585 lub +48 794 326 333.',
+      },
+      {
+        q: 'Gdzie znajduje się gabinet?',
+        a: 'Gabinet mieści się przy ul. M. Kolbego 42 (I piętro, gab. nr 2), 85-432 Bydgoszcz.',
+      },
+      {
+        q: 'Ile osób bierze udział w warsztatach i ile one trwają?',
+        a: 'Warsztaty prowadzone są w kameralnych grupach – maksymalnie 8 osób. Warsztaty stacjonarne trwają 1 dzień, a warsztaty w plenerze 2 dni.',
+      },
+      {
+        q: 'Na czym polega metoda BioSyntonika™?',
+        a: 'To autorski system pracy łączący hipnoterapię medyczną i wiedzę o biologii stresu, techniki świadomego oddechu, podejście systemowe (rodowe), detoksykację informacyjną preparatami MARION oraz naturopatyczne zabiegi wspomagające, takie jak biorezonans, bańki czy masaże energetyczne.',
+      },
+    ],
+  },
+
+  disclaimer:
+    'Sesje i warsztaty mają charakter wspierający i nie zastępują diagnozy ani leczenia prowadzonego przez lekarza.',
 
   booking: {
     title: 'Umów wizytę',

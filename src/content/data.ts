@@ -16,6 +16,15 @@ export const products: Product[] = [
     images: [{ url: '/images/sesja.jpg', alt: 'Sesja BioSyntonika™ 1:1', width: 1600, height: 872 }],
     categories: [{ slug: 'sesje', name: 'Sesje' }],
     purchasable: true,
+    seoTitle: 'Sesja 1:1 BioSyntonika™ – hipnoterapia medyczna, Bydgoszcz',
+    seoDescription:
+      'Sesja 1:1 (ok. 120 min): hipnoterapia medyczna, Totalna Biologia, praca z rodem i układem nerwowym. Bydgoszcz, Szklarska Poręba lub online.',
+    facts: [
+      { label: 'Czas trwania', value: 'ok. 120 minut' },
+      { label: 'Forma', value: 'online lub stacjonarnie' },
+      { label: 'Miejsce', value: 'Bydgoszcz, Szklarska Poręba' },
+      { label: 'Online', value: 'WhatsApp, Messenger, FaceTime' },
+    ],
     shortDescriptionHtml:
       '<p>Holistyczna sesja, która pomaga odnaleźć drogę powrotną do równowagi — w ciele, emocjach i głębszych wzorcach, które nosimy czasem od pokoleń.</p>',
     descriptionHtml: `
@@ -71,6 +80,13 @@ export const products: Product[] = [
     ],
     categories: [{ slug: 'warsztaty', name: 'Warsztaty' }],
     purchasable: true,
+    seoTitle: 'Warsztaty z anhedonii – BioSyntonika™, Bydgoszcz',
+    seoDescription:
+      'Kameralne warsztaty (max 8 osób) o anhedonii: neurobiologia stresu, Totalna Biologia i wzorce rodowe. 1 dzień stacjonarnie lub 2 dni w plenerze.',
+    facts: [
+      { label: 'Grupa', value: 'maks. 8 osób' },
+      { label: 'Czas trwania', value: '1 dzień (stacjonarnie) / 2 dni (w plenerze)' },
+    ],
     shortDescriptionHtml:
       '<p>Czas oddać to, co nie Twoje. Czas zresetować układ nerwowy i uwolnić ciało z zamrożenia. Grupy kameralne – max 8 osób.</p>',
     descriptionHtml: `
@@ -121,15 +137,18 @@ export const pages: Page[] = [
     slug: 'regulamin',
     title: 'Regulamin',
     html: '<p>Treść regulaminu w przygotowaniu.</p>',
+    noindex: true,
   },
   {
     slug: 'zwroty',
     title: 'Polityka zwrotów',
     html: '<p>Treść polityki zwrotów w przygotowaniu.</p>',
+    noindex: true,
   },
   {
     slug: 'polityka-prywatnosci',
     title: 'Polityka prywatności',
     html: '<p>Treść polityki prywatności w przygotowaniu.</p>',
+    noindex: true,
   },
 ]

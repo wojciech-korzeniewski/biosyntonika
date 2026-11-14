@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
       { source: '/zamowienie', destination: '/#oferta', permanent: true },
       { source: '/moje-konto/:path*', destination: '/', permanent: true },
       { source: '/sample-page', destination: '/', permanent: true },
+      { source: '/2026/09/06/hello-world', destination: '/', permanent: true },
+      { source: '/category/:path*', destination: '/', permanent: true },
+      { source: '/feed', destination: '/', permanent: true },
+      { source: '/wp-sitemap.xml', destination: '/sitemap.xml', permanent: true },
+      { source: '/wp-sitemap-:rest(.*)', destination: '/sitemap.xml', permanent: true },
     ]
   },
 }

@@ -8,7 +8,12 @@ type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = await cms.getPage((await params).slug)
-  return page ? { title: page.title } : {}
+  if (!page) return {}
+  return {
+    title: page.title,
+    alternates: { canonical: `/${page.slug}` },
+    robots: page.noindex ? { index: false, follow: true } : undefined,
+  }
 }
 
 export default async function Page({ params }: Props) {

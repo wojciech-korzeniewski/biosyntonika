@@ -27,12 +27,19 @@ export type Product = {
   descriptionHtml?: string
   categories: { slug: string; name: string }[]
   purchasable: boolean
+  /** Opcjonalny tytuł/opis do wyszukiwarek (gdy brak – z tytułu i krótkiego opisu). */
+  seoTitle?: string
+  seoDescription?: string
+  /** Krótkie fakty (np. czas trwania, forma) – pokazywane na stronie i w danych strukturalnych. */
+  facts?: { label: string; value: string }[]
 }
 
 export type Page = {
   slug: string
   title: string
   html: string
+  /** true = strona niegotowa, ukryta przed wyszukiwarkami. */
+  noindex?: boolean
 }
 
 export interface CmsAdapter {

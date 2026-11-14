@@ -1,6 +1,8 @@
+import { JsonLd } from '@/components/JsonLd'
 import { ProductCard } from '@/components/ProductCard'
 import { site } from '@/content/site'
 import { cms } from '@/lib/cms'
+import { businessJsonLd, hasIkigai } from '@/lib/seo'
 
 export const revalidate = 300
 
@@ -9,20 +11,24 @@ const WORDS = ['spokój', 'oddech', 'uziemienie', 'regeneracja', 'witalność']
 
 export default async function HomePage() {
   const products = await cms.getProducts()
-  const { hero, about, method, ikigai, offer, booking, contact } = site
+  const { hero, about, method, ikigai, offer, booking, contact, faq } = site
 
   return (
     <>
+      <JsonLd data={businessJsonLd()} />
       <section className="hero" id="start">
         <div className="hero-text">
+          <p className="eyebrow">{site.tagline}</p>
           <h1>{hero.title}</h1>
           <p className="lead">{hero.lead}</p>
           <div className="actions">
-            {hero.buttons.map((b) => (
-              <a key={b.href} href={b.href} className="btn btn-outline">
-                {b.label}
-              </a>
-            ))}
+            {hero.buttons
+              .filter((b) => hasIkigai || b.href !== '#ikigai')
+              .map((b) => (
+                <a key={b.href} href={b.href} className="btn btn-outline">
+                  {b.label}
+                </a>
+              ))}
           </div>
         </div>
         <div className="hero-visual" aria-hidden="true">
@@ -50,7 +56,9 @@ export default async function HomePage() {
           <aside className="panel">
             <h3>{about.workspace.title}</h3>
             <p>{about.workspace.text}</p>
-            <p className="muted" style={{ whiteSpace: 'pre-line' }}>{contact.address}</p>
+            <p className="muted" style={{ whiteSpace: 'pre-line' }}>
+              {contact.address}
+            </p>
             <p className="muted">
               <a href={`mailto:${contact.email}`}>{contact.email}</a>
               <br />
@@ -84,13 +92,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="ikigai" className="section">
-        <div className="container narrow center">
-          <p className="eyebrow">Odkryj swoje</p>
-          <h2>{ikigai.title}</h2>
-          {ikigai.text ? <p className="lead">{ikigai.text}</p> : <p className="muted">Sekcja w przygotowaniu.</p>}
-        </div>
-      </section>
+      {hasIkigai && (
+        <section id="ikigai" className="section">
+          <div className="container narrow center">
+            <p className="eyebrow">Odkryj swoje</p>
+            <h2>{ikigai.title}</h2>
+            <p className="lead">{ikigai.text}</p>
+          </div>
+        </section>
+      )}
 
       <section id="oferta" className="section alt">
         <div className="container">
@@ -106,7 +116,24 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="wizyta" className="section">
+      <section id="faq" className="section">
+        <div className="container narrow">
+          <p className="eyebrow">FAQ</p>
+          <h2>{faq.title}</h2>
+          <div className="faq">
+            {faq.items.map((f) => (
+              <details key={f.q}>
+                <summary>
+                  <h3>{f.q}</h3>
+                </summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="wizyta" className="section alt">
         <div className="container narrow center">
           <p className="eyebrow">Kontakt</p>
           <h2>{booking.title}</h2>

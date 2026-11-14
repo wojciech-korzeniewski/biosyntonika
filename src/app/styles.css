@@ -162,6 +162,24 @@ nav a:not(.btn):hover { color: var(--gold); }
 
 .page { padding-top: 96px; padding-bottom: 120px; }
 
+/* FAQ */
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 24px 40px 24px 0; position: relative; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; position: absolute; right: 4px; top: 18px; font-size: 1.6rem; color: var(--gold); transition: transform 0.2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq summary h3 { margin: 0; font-size: 1.4rem; }
+.faq details p { color: #cfcabe; padding-bottom: 24px; margin: 0; }
+
+/* Product facts */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; margin: 0 0 32px; border: 1px solid var(--line); background: var(--line); }
+.facts div { background: var(--bg); padding: 14px 18px; }
+.facts dt { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.facts dd { margin: 4px 0 0; }
+
+.disclaimer { font-size: 0.8rem; color: var(--muted); margin-top: 40px; }
+
 /* Footer */
 .site-footer { border-top: 1px solid rgb(255 255 255 / 0.07); padding: 72px 0 32px; font-size: 0.92rem; color: var(--muted); }
 .footer-inner { display: grid; grid-template-columns: 2fr 1.4fr 1fr; gap: 40px; }
