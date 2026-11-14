@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Price } from '@/components/ProductCard'
 import { cms } from '@/lib/cms'
+import { OG_SIZE, ogImageUrl } from '@/lib/og'
 import { productJsonLd, stripHtml, truncate } from '@/lib/seo'
 
 export const revalidate = 300
@@ -31,7 +32,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url,
-      images: product.images[0] ? [{ url: product.images[0].url, alt: product.images[0].alt }] : undefined,
+      images: product.images[0]
+        ? [{ url: product.images[0].url, alt: product.images[0].alt }]
+        : [{ url: ogImageUrl(title), alt: title, ...OG_SIZE }],
     },
   }
 }

@@ -1,4 +1,4 @@
-import { ikigaiPage } from '@/content/ikigai'
+import { ikigaiPage } from '@/content/ikigai/page'
 import { site } from '@/content/site'
 import { topics } from '@/content/topics'
 import { cms } from '@/lib/cms'

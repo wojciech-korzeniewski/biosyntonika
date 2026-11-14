@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { CtaBox } from '@/components/CtaBox'
 import { Faq } from '@/components/Faq'
-import { IkigaiDiagram } from '@/components/IkigaiDiagram'
 import { JsonLd } from '@/components/JsonLd'
 import { ProductCard } from '@/components/ProductCard'
-import { ikigaiPage } from '@/content/ikigai'
+import { Venn } from '@/components/ikigai/Venn'
+import { ikigaiPage } from '@/content/ikigai/page'
 import { site } from '@/content/site'
 import { cms } from '@/lib/cms'
 import { businessJsonLd } from '@/lib/seo'
@@ -96,13 +96,13 @@ export default async function HomePage() {
           <div>
             <p className="eyebrow">{ikigaiPage.eyebrow}</p>
             <h2>Odkryj swoje ikigai</h2>
-            <p>{ikigaiPage.purpose.text}</p>
+            <p>{ikigaiPage.teaser}</p>
             <p className="muted">4 kręgi · 20 pytań · wersje dla dorosłych, młodzieży oraz firm i zespołów.</p>
             <Link href="/ikigai" className="btn btn-outline">
               Rozpocznij ćwiczenie
             </Link>
           </div>
-          <IkigaiDiagram className="compact" />
+          <Venn lang="pl" className="compact" />
         </div>
       </section>
 

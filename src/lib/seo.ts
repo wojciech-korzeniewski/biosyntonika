@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { site } from '@/content/site'
 import type { Product } from '@/lib/cms'
+import { OG_SIZE, ogImageUrl } from '@/lib/og'
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || site.url).replace(/\/+$/, '')
 export const abs = (path: string) => (path.startsWith('http') ? path : `${SITE_URL}${path}`)
@@ -36,7 +37,7 @@ export function pageMetadata({
       title: fullTitle,
       description: truncate(description),
       url: path,
-      ...(image ? { images: [image] } : {}),
+      images: [image ?? { url: ogImageUrl(fullTitle), alt: fullTitle, ...OG_SIZE }],
     },
   }
 }

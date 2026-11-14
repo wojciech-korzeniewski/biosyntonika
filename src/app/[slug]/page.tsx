@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cms } from '@/lib/cms'
+import { pageMetadata, stripHtml } from '@/lib/seo'
 
 export const revalidate = 300
 
@@ -10,8 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const page = await cms.getPage((await params).slug)
   if (!page) return {}
   return {
-    title: page.title,
-    alternates: { canonical: `/${page.slug}` },
+    ...pageMetadata({ title: page.title, description: stripHtml(page.html), path: `/${page.slug}` }),
     robots: page.noindex ? { index: false, follow: true } : undefined,
   }
 }

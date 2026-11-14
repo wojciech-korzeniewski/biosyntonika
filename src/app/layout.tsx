@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const { contact } = site
   const navItems = site.nav
   return (
-    <html lang="pl" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="pl" className={`${serif.variable} ${sans.variable}`} data-scroll-behavior="smooth">
       <body>
         <header className="site-header">
           <div className="container header-inner">

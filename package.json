@@ -12,10 +12,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "next": "16.4.6",
     "react": "19.2.6",
     "react-dom": "19.2.6",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "22.19.9",
@@ -30,7 +32,10 @@
     "node": ">=20.9.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["sharp", "unrs-resolver"]
+    "onlyBuiltDependencies": [
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "packageManager": "pnpm@10.28.0"
 }
