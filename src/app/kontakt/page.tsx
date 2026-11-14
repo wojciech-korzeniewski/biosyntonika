@@ -1,4 +1,5 @@
 import { JsonLd } from '@/components/JsonLd'
+import { MapEmbed } from '@/components/MapEmbed'
 import { PageHeader } from '@/components/PageHeader'
 import { site } from '@/content/site'
 import { pageMetadata, webPageJsonLd } from '@/lib/seo'
@@ -52,6 +53,13 @@ export default function ContactPage() {
             <h3>Obszar</h3>
             <p>{contact.areaServed.join(' · ')}</p>
           </address>
+        </div>
+        <div className="container">
+          <MapEmbed
+            src={booking.mapsEmbedUrl}
+            title={`Mapa dojazdu – ${contact.street}, Bydgoszcz`}
+            linkUrl={booking.mapsUrl}
+          />
         </div>
       </section>
     </>

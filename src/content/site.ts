@@ -167,5 +167,7 @@ export const site = {
       'Na warsztaty zapisy telefoniczne – grupy do 8 osób.',
     ],
     mapsUrl: 'https://www.google.com/maps/search/?api=1&query=ul.+Kolbego+42,+85-432+Bydgoszcz',
+    // Osadzana mapa (iframe) – działa bez klucza API.
+    mapsEmbedUrl: 'https://maps.google.com/maps?q=ul.+Maksymiliana+Kolbego+42,+85-432+Bydgoszcz&z=15&output=embed',
   },
 }
