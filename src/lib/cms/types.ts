@@ -20,7 +20,8 @@ export type Product = {
   /** Cena przed promocją, jeśli produkt jest przeceniony. */
   compareAtPrice?: number
   currency: string
-  image?: CmsImage
+  /** Pierwsze zdjęcie = główne. */
+  images: CmsImage[]
   /** HTML z CMS-a. */
   shortDescriptionHtml?: string
   descriptionHtml?: string

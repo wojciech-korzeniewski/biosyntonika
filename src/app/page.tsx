@@ -4,33 +4,100 @@ import { cms } from '@/lib/cms'
 
 export const revalidate = 300
 
+const tel = (phone: string) => `tel:${phone.replace(/\s/g, '')}`
+const WORDS = ['spokój', 'oddech', 'uziemienie', 'regeneracja', 'witalność']
+
 export default async function HomePage() {
   const products = await cms.getProducts()
+  const { hero, about, method, ikigai, offer, booking, contact } = site
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-inner container">
-          <h1>{site.hero.title}</h1>
-          <p>{site.hero.subtitle}</p>
-          <a href="#oferta" className="button">
-            Zobacz ofertę
-          </a>
+      <section className="hero" id="start">
+        <div className="hero-text">
+          <h1>{hero.title}</h1>
+          <p className="lead">{hero.lead}</p>
+          <div className="actions">
+            {hero.buttons.map((b) => (
+              <a key={b.href} href={b.href} className="btn btn-outline">
+                {b.label}
+              </a>
+            ))}
+          </div>
+        </div>
+        <div className="hero-visual" aria-hidden="true">
+          <div className="arch">
+            <div className="words">
+              {WORDS.map((w, i) => (
+                <span key={w} style={{ animationDelay: `${i * 3}s` }}>
+                  {w}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {site.sections.map((s, i) => (
-        <section key={s.anchor} id={s.anchor} className={`section ${i % 2 ? 'alt' : ''}`}>
-          <div className="container narrow">
-            <h2>{s.title}</h2>
-            <div className="prose" dangerouslySetInnerHTML={{ __html: s.html }} />
+      <section id="o-mnie" className="section">
+        <div className="container split">
+          <div>
+            <p className="eyebrow">O mnie</p>
+            <h2>{about.title}</h2>
+            {about.paragraphs.map((p) => (
+              <p key={p.slice(0, 24)}>{p}</p>
+            ))}
           </div>
-        </section>
-      ))}
+          <aside className="panel">
+            <h3>{about.workspace.title}</h3>
+            <p>{about.workspace.text}</p>
+            <p className="muted" style={{ whiteSpace: 'pre-line' }}>{contact.address}</p>
+            <p className="muted">
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
+              <br />
+              {contact.phones.map((p, i) => (
+                <span key={p}>
+                  {i > 0 && ' / '}
+                  <a href={tel(p)}>{p}</a>
+                </span>
+              ))}
+            </p>
+          </aside>
+        </div>
+      </section>
 
-      <section id="oferta" className="section">
+      <section id="metoda" className="section alt">
         <div className="container">
-          <h2>{site.offerTitle}</h2>
+          <div className="section-head">
+            <p className="eyebrow">Metoda</p>
+            <h2>{method.title}</h2>
+            <p className="lead">{method.lead}</p>
+          </div>
+          <ol className="pillars">
+            {method.pillars.map((p, i) => (
+              <li key={p.title}>
+                <span className="pillar-no">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="ikigai" className="section">
+        <div className="container narrow center">
+          <p className="eyebrow">Odkryj swoje</p>
+          <h2>{ikigai.title}</h2>
+          {ikigai.text ? <p className="lead">{ikigai.text}</p> : <p className="muted">Sekcja w przygotowaniu.</p>}
+        </div>
+      </section>
+
+      <section id="oferta" className="section alt">
+        <div className="container">
+          <div className="section-head">
+            <p className="eyebrow">Sklep</p>
+            <h2>{offer.title}</h2>
+          </div>
           <div className="grid">
             {products.map((p) => (
               <ProductCard key={p.id} product={p} />
@@ -39,19 +106,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="kontakt" className="section alt">
-        <div className="container narrow">
-          <h2>{site.contactTitle}</h2>
-          <div className="prose" dangerouslySetInnerHTML={{ __html: site.contactHtml }} />
-          <ul className="contact">
-            <li>
-              Telefon: <a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>
-            </li>
-            <li>
-              E-mail: <a href={`mailto:${site.email}`}>{site.email}</a>
-            </li>
-            <li style={{ whiteSpace: 'pre-line' }}>{site.address}</li>
-          </ul>
+      <section id="wizyta" className="section">
+        <div className="container narrow center">
+          <p className="eyebrow">Kontakt</p>
+          <h2>{booking.title}</h2>
+          <p>{booking.text}</p>
+          <p className="big-phone">
+            <a href={tel(contact.bookingPhone)}>{contact.bookingPhone}</a>
+          </p>
+          <p className="muted">
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </p>
         </div>
       </section>
     </>

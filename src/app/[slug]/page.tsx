@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
   const page = await cms.getPage((await params).slug)
   if (!page) notFound()
   return (
-    <article className="container narrow">
+    <article className="container narrow page">
       <h1>{page.title}</h1>
       <div className="prose" dangerouslySetInnerHTML={{ __html: page.html }} />
     </article>
