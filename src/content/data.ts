@@ -28,9 +28,6 @@ export const products: Product[] = [
     shortDescriptionHtml:
       '<p>Holistyczna sesja, która pomaga odnaleźć drogę powrotną do równowagi — w ciele, emocjach i głębszych wzorcach, które nosimy czasem od pokoleń.</p>',
     descriptionHtml: `
-<p><strong>Sesja Indywidualna BioSyntonika™ | Praca 1:1</strong></p>
-<p>Holistyczna sesja, która pomaga odnaleźć drogę powrotną do równowagi — w ciele, emocjach i głębszych wzorcach, które nosimy czasem od pokoleń.</p>
-
 <h2>Dla kogo jest ta sesja</h2>
 <p>Jeśli czujesz przewlekłe zmęczenie, somatyczne dolegliwości bez jasnej przyczyny, długotrwały stres czy lęk — albo po prostu masz wrażenie, że utknęłaś/eś w miejscu i szukasz źródła tego stanu głębiej niż na powierzchni.</p>
 

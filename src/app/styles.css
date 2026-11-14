@@ -188,14 +188,14 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 
 /* Product */
 .product { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; padding-top: 72px; padding-bottom: 120px; align-items: start; }
-.product-gallery { display: grid; gap: 16px; position: sticky; top: 120px; }
+.product-gallery { display: flex; flex-direction: column; gap: 16px; align-self: stretch; }
 .product-gallery img { width: 100%; height: auto; border: 1px solid var(--line); }
 .product-info h1 { margin-bottom: 0.4em; }
 .product-lead { font-size: 1.15rem; line-height: 1.7; color: #cfcabe; margin-bottom: 28px; max-width: 34em; }
 .product-lead p { margin: 0; }
 .product-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 56px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
 .product-cta .muted { margin: 0; align-self: center; }
-.product-aside { padding: 32px; }
+.product-aside { padding: 32px; position: sticky; top: 120px; margin-top: 16px; }
 .product-aside .eyebrow { margin-bottom: 0.8rem; }
 .product-steps { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; font-size: 0.95rem; color: #cfcabe; }
 .product-steps li { position: relative; padding-left: 22px; }
@@ -204,8 +204,8 @@ html.menu-open, html.menu-open body { overflow: hidden; }
 .product-contact div { display: flex; flex-direction: column; gap: 2px; }
 .product-contact .muted { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
 .product-aside .disclaimer { margin: 20px 0 0; }
-/* Sticky tylko gdy galeria + panel mieszczą się w oknie */
-@media (max-height: 900px) { .product-gallery { position: static; } }
+/* Na niskich ekranach panel się nie mieści – bez przyklejania */
+@media (max-height: 640px) { .product-aside { position: static; } }
 .product-info .eyebrow a { color: var(--gold); }
 
 /* Prose (HTML z CMS) */
@@ -264,7 +264,8 @@ html.menu-open, html.menu-open body { overflow: hidden; }
   .arch { min-height: 240px; }
   .section { padding: 80px 0; }
   .split, .product, .footer-inner { grid-template-columns: 1fr; gap: 40px; }
-  .product-gallery { position: static; }
+  .product-gallery { align-self: start; }
+  .product-aside { position: static; }
   .panel { padding: 28px; }
   .grid { grid-template-columns: 1fr; }
 }
