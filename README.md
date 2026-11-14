@@ -2,6 +2,8 @@
 
 Strona w Next.js 16. Bez bazy danych. Produkty, treści i płatności docelowo dostarczy zewnętrzny CMS przez API (do wyboru).
 
+**Pełny opis projektu (po co, jak działa, technologia, stan): [docs/PROJEKT.md](docs/PROJEKT.md).** Instrukcje dla Claude Code: [CLAUDE.md](CLAUDE.md).
+
 ## Start
 
 ```bash
